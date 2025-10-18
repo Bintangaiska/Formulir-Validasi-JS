@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulir</title>
+
+  <style>
+    /* Mengatur tampilan umum halaman */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f4f6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    /* Mengatur tampilan form */
+    form {
+      background-color: #fff;
+      padding: 20px 30px; 
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 300px;
+    }
+
+    /* Mengatur tampilan judul */
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    /* Label untuk setiap input */
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+    }
+
+    /* Input text, email, dan password */
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    /* Tombol kirim dengan warna pink */
+    button {
+      width: 100%;
+      margin-top: 15px;
+      background-color: #ec4899; /* Warna pink utama */
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* Efek hover tombol (pink lebih gelap) */
+    button:hover {
+      background-color: #db2777;
+    }
+
+    /* Pesan error akan tampil dengan warna merah */
+    .error {
+      color: red;
+      font-size: 0.9em;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Form login dengan validasi -->
+  <form id="myForm" onsubmit="return validateForm()">
+    <h2>Login</h2>
+
+    <!-- Input nama -->
+    <label for="nama">Nama:</label>
+    <input type="text" id="nama" name="nama">
+
+    <!-- Input email -->
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="email">
+
+    <!-- Input password -->
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password">
+
+    <!-- Tombol untuk mengirim form -->
+    <button type="submit">Kirim</button>
+
+    <!-- Tempat menampilkan pesan error -->
+    <p id="errorMsg" class="error"></p>
+  </form>
+
+  <script>
+    // Fungsi untuk memvalidasi form sebelum dikirim
+    function validateForm() {
+      // Ambil nilai dari input nama, email, dan password
+      const nama = document.getElementById("nama").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const errorMsg = document.getElementById("errorMsg");
+
+      // Reset pesan error setiap kali tombol diklik
+      errorMsg.textContent = "";
+
+      // 1. Cek apakah semua kolom sudah diisi
+      if (!nama || !email || !password) {
+        errorMsg.textContent = "Semua kolom wajib diisi!";
+        return false; // Hentikan pengiriman form
+      }
+
+      // 2. Validasi format email (harus ada @ dan .)
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email)) {
+        errorMsg.textContent = "Format email tidak valid!";
+        return false;
+      }
+
+      // 3. Pastikan password minimal 8 karakter
+      if (password.length < 8) {
+        errorMsg.textContent = "Password minimal 8 karakter!";
+        return false;
+      }
+
+      // Jika semua valid, tampilkan pesan berhasil
+      alert("Formulir berhasil dikirim!");
+      return true; // Form bisa dikirim (meski belum ke database)
+    }
+  </script>
+</body>
+</html>
